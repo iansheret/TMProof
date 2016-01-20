@@ -11,15 +11,15 @@ end
 % Constructor
 
 function TestConstructorGeneratesValidObjectWithSingleParameter(testCase)
-ad = Autodiff([1,2;3,4]);
-verifyEqual(testCase, ad.x, [1,2;3,4]);
-verifyEqual(testCase, ad.d, ones(2));
+ad = Autodiff(2);
+verifyEqual(testCase, ad.x, 2);
+verifyEqual(testCase, ad.d, 1);
 end
 
 function TestConstructorGeneratesValidObjectWithTwoParameters(testCase)
-ad = Autodiff([1,2;3,4], [5,6;7,8]);
-verifyEqual(testCase, ad.x, [1,2;3,4]);
-verifyEqual(testCase, ad.d, [5,6;7,8]);
+ad = Autodiff(2, 7);
+verifyEqual(testCase, ad.x, 2);
+verifyEqual(testCase, ad.d, 7);
 end
 
 % Fundamental arithmetic opperators

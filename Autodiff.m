@@ -22,6 +22,8 @@ classdef Autodiff
 % Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
 % of the MIT license. See the LICENSE file for details.
 
+    % Make the object immutable, as this is the simplist way to preserve
+    % class invarients.
     properties (SetAccess = immutable)
         x % The value
         d % The derivitive
@@ -29,13 +31,14 @@ classdef Autodiff
     
     methods
         
-        % Constructor.
+        % Constructor. Only support scalars to minimise complexity.
         function ad = Autodiff(x, d)
+            assert(isequal(size(x), [1, 1]));
             ad.x = x;
             if nargin == 1
                 ad.d = ones(size(x));
             else
-                assert(isequal(size(x), size(d)));
+                assert(isequal(size(d), [1, 1]));
                 ad.d = d;
             end
         end
