@@ -14,3 +14,11 @@ function TestBoundPolynomialGiveCorrectAnswer(testCase)
 verifyEqual(testCase, l, -1);
 verifyEqual(testCase, u, 3);
 end
+
+% Polynomial splitting
+function TestSplitPolynomialGiveCorrectAnswer(testCase)
+[high,low] = SplitPolynomial(1:10, 3);
+verifyEqual(testCase, low, 7:10);
+verifyEqual(testCase, high, [1:6, 0, 0, 0, 0]);
+end
+
