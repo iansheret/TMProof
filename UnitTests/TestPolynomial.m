@@ -21,4 +21,3 @@ function TestSplitPolynomialGiveCorrectAnswer(testCase)
 verifyEqual(testCase, low, 7:10);
 verifyEqual(testCase, high, [1:6, 0, 0, 0, 0]);
 end
-
