@@ -1,5 +1,5 @@
-function tests = TestAutodiff
-%TESTAUTODIFF Unit tests for the Autodiff class.
+function tests = test_Autodiff
+%TEST_AUTODIFF Unit tests for the Autodiff class.
 
 % Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
 % of the MIT license. See the LICENSE file for details.
@@ -9,7 +9,6 @@ tests = functiontests(localfunctions);
 end
 
 % Constructor
-
 function TestConstructorGeneratesValidObjectWithSingleParameter(testCase)
 ad = Autodiff(2);
 verifyEqual(testCase, ad.x, 2);
@@ -23,7 +22,6 @@ verifyEqual(testCase, ad.d, 7);
 end
 
 % Fundamental arithmetic opperators
-
 function TestPlusGivesCorrectAnswer(testCase)
 ad = Autodiff(2,5) + Autodiff(3,7);
 verifyEqual(testCase, ad.x, 5);
@@ -49,7 +47,6 @@ verifyEqual(testCase, ad.d, 2^3 * (log(2)*7 + 5*3/2) );
 end
 
 % Derived opperators
-
 function TestUnaryMinusGivesCorrectAnswer(testCase)
 ad = -Autodiff(2,5);
 verifyEqual(testCase, ad.x, -2);
@@ -63,7 +60,6 @@ verifyEqual(testCase, ad.d, -2);
 end
 
 % Transcendental functions
-
 function TestLogGivesCorrectAnswer(testCase)
 ad = log(Autodiff(2,5));
 verifyEqual(testCase, ad.x, log(2));

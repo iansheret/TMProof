@@ -1,5 +1,5 @@
-function [l, u] = BoundPolynomial(p, a, b)
-%BOUNDPOLYNOMIAL Bound a polynomial within an interval
+function [l, u] = bound_polynomial(p, a, b)
+%BOUND_POLYNOMIAL Bound a polynomial within an interval
 
 % Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
 % of the MIT license. See the LICENSE file for details.
