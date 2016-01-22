@@ -80,3 +80,36 @@ for i=1:size(table,1)
     verifyEqual(testCase, in.upper, table(i,5));
 end
 end
+
+function TestSinGivesCorrectAnswer(testCase)
+table = [...
+      0.1,0.2,    sin(0.1),sin(0.2);...
+      1.7,1.8,    sin(1.8),sin(1.7);...
+      1.5,1.6,    sin(1.5),1;...
+      4.7,4.8,    -1,sin(4.8);...
+      1.5,4.8,    -1,1];
+  
+for i=1:size(table,1)
+    a = Interval(table(i,1), table(i,2));
+    in = sin(a);
+    verifyEqual(testCase, in.lower, table(i,3));
+    verifyEqual(testCase, in.upper, table(i,4));
+end
+end
+
+function TestCosGivesCorrectAnswer(testCase)
+table = [...
+      0.1,0.2,    cos(0.2),cos(0.1);...
+      3.2,3.3,    cos(3.2),cos(3.3);...
+     -0.1,0.2,    cos(0.2),1;...
+      3.0,3.5,    -1,cos(3.5);...
+     -0.1,3.5,    -1,1];
+  
+for i=1:size(table,1)
+    a = Interval(table(i,1), table(i,2));
+    in = cos(a);
+    verifyEqual(testCase, in.lower, table(i,3));
+    verifyEqual(testCase, in.upper, table(i,4));
+end
+end
+

@@ -40,6 +40,10 @@ classdef Interval
             c = Interval(a.lower - b.upper, a.upper - b.lower);
         end
         
+        function c = uminus(a)
+            c = Interval(-a.upper, -a.lower);
+        end
+        
         function c = times(a, b)
             [a, b] = promoteIfNumeric(a, b);
             v = [...
@@ -89,6 +93,31 @@ classdef Interval
             else
                 result = true;
             end
+        end
+        
+        % Sine
+        function c = sin(a)
+            v = [a.lower, a.upper];
+            y = sin(v);
+            
+            n = floor((a.lower - pi/2)/(2*pi));
+            m = floor((a.upper - pi/2)/(2*pi));
+            if n~=m
+                y = [y, 1];
+            end
+
+            n = floor((a.lower - 3*pi/2)/(2*pi));
+            m = floor((a.upper - 3*pi/2)/(2*pi));
+            if n~=m
+                y = [y, -1];
+            end
+
+            c = Interval(min(y), max(y));
+        end
+        
+        % Cosine
+        function c = cos(a)
+            c = sin(a + pi/2);
         end
         
     end

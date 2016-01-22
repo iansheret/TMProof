@@ -170,8 +170,41 @@ classdef TaylorModel
             else
                 tm = a .* a.^(b-1);
             end
-        end     
-                
+        end
+        
+        % Sine
+        function tm = sin(a)
+            
+            % Split the constant part (c) from the rest (f_bar).
+            [h,c] = split_polynomial(a.P,0);
+            f_bar = TaylorModel(a.a, a.b, h, a.I);
+            
+            % Get the bound (B) on f_bar
+            x0 = a.x0;
+            ab = Interval(a.a - x0, a.b - x0);
+            B = bound_polynomial(f_bar.P, ab) + f_bar.I;
+            
+            % Evaluate the polynomial part
+            n = a.n;
+            g = [cos(c), -sin(c), -cos(c), sin(c)];
+            tm = sin(c);
+            f_bar_i = 1;
+            for i=1:n
+                f_bar_i = f_bar_i .* f_bar;
+                s = g(mod(i-1,4)+1);
+                tm = tm + s.*f_bar_i./factorial(i);
+            end
+            
+            % Evaluate the remainder part
+            theta = Interval(0,1);
+            d = c + theta.*B;
+            g = [cos(d), -sin(d), -cos(d), sin(d)];
+            s = g(mod(n,4)+1);
+            r = s.*(B.^(n+1))./factorial(n+1);
+            tm = TaylorModel(tm.a, tm.b, tm.P, tm.I + r);
+            
+        end
+      
     end
     
 end
