@@ -1,4 +1,4 @@
-function [l, u] = bound_polynomial(p, a, b)
+function Y = bound_polynomial(p, X)
 %BOUND_POLYNOMIAL Bound a polynomial within an interval
 
 % Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
@@ -13,15 +13,14 @@ is_real_root = abs(imag(r))==0;
 r = r(is_real_root);
 
 % Discard roots outside the interval
-is_in_interval = a<=r & r<=b;
+is_in_interval = X.lower<=r & r<=X.upper;
 r = r(is_in_interval);
 
 % Get a list of candidate extrema
-x = [a; b; r];
+x = [X.lower; X.upper; r];
 y = polyval(p, x);
 
 % Identify the bounds
-l = min(y);
-u = max(y);
+Y = Interval(min(y), max(y));
 
 end

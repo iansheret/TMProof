@@ -10,9 +10,9 @@ end
 
 % Polynomial bounding
 function TestBoundPolynomialGiveCorrectAnswer(testCase)
-[l,u] = bound_polynomial([1,-2,0], 0, 3);
-verifyEqual(testCase, l, -1);
-verifyEqual(testCase, u, 3);
+I = bound_polynomial([1,-2,0], Interval(0, 3));
+verifyEqual(testCase, I.lower, -1);
+verifyEqual(testCase, I.upper, 3);
 end
 
 % Polynomial splitting
