@@ -18,7 +18,6 @@ function [result, counterexample] = prove_in_band(f, x0, x1, y0, y1, order)
 q = Queue;
 q.push(Interval(x0, x1));
 
-hits = 0;
 % Handle items in the queue
 while q.num_items > 0
     
@@ -26,7 +25,6 @@ while q.num_items > 0
     % interval.
     x = q.pop;
     y = bound_function(f, x, order);
-    hits = hits + 1;
     
     % Check if the test has outright failed
     if (y.upper < y0) || (y.lower > y1)
