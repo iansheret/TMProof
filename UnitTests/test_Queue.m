@@ -93,3 +93,10 @@ end
 expected_x = 13:112;
 verifyEqual(test_case, x, expected_x);
 end
+
+function test_queue_can_handle_structs(test_case)
+q = Queue;
+obj.field = 12;
+q.push(obj);
+verifyEqual(test_case, q.pop, obj);
+end

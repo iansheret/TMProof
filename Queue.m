@@ -25,7 +25,11 @@ classdef Queue < handle
 
         function push(q, item)
             assert(isequal(size(item), [1,1]));
-            q.buffer(q.tail) = item;
+            if isempty(q.buffer)
+                q.buffer = item;
+            else
+                q.buffer(q.tail) = item;
+            end
             q.tail = q.tail + 1;
             q.count = q.count + 1;
         end
