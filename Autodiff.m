@@ -56,9 +56,9 @@ classdef Autodiff
         
         function ad = times(a, b)
             if isnumeric(a)
-                ad = Autodiff(a*b.x, a*b.d);
+                ad = Autodiff(a.*b.x, a.*b.d);
             elseif isnumeric(b)
-                ad = Autodiff(a.x*b, a.d*b);
+                ad = Autodiff(a.x.*b, a.d.*b);
             else
                 ad = Autodiff(a.x.*b.x, a.d.*b.x + a.x.*b.d);
             end
