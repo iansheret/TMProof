@@ -11,7 +11,7 @@ classdef TaylorModel
     properties (SetAccess = immutable)
         a % Lower bound of range
         b % Upper bound of range
-        P % Polynomial model
+        P % Polynomial coeffs, as a row vector
         I % Remainder interval
     end
     
@@ -207,4 +207,15 @@ classdef TaylorModel
       
     end
     
+    methods(Static)
+        
+        % Named constructor for the identity function
+        function tm = identity(a, b, order)
+            p = zeros(1, order + 1);
+            p(end-1) = 1;
+            p(end) = 0.5*(a + b);
+            tm = TaylorModel(a, b, p, Interval(0,0));
+        end
+        
+    end
 end

@@ -18,6 +18,16 @@ verifyEqual(test_case, t.I.lower, 6);
 verifyEqual(test_case, t.I.upper, 7);
 end
 
+% Named constructor for the identity function
+function test_identity_constructor_generates_correct_object(test_case)
+t = TaylorModel.identity(1, 2, 5);
+verifyEqual(test_case, t.a, 1);
+verifyEqual(test_case, t.b, 2);
+verifyEqual(test_case, t.P, [0, 0, 0, 0, 1, 1.5]);
+verifyEqual(test_case, t.I.lower, 0);
+verifyEqual(test_case, t.I.upper, 0);
+end
+
 % Fundamental opperators
 % Plus
 function test_plus_tm_tm_gives_correct_answer(test_case)
