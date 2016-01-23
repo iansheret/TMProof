@@ -10,7 +10,7 @@ function [result, counterexample] = prove_in_band(f, x0, x1, y0, y1, order)
 %   [result, counterexample] = PROVE_IN_BAND(f, x0, x1, y0, y1, order) can
 %   be used to find out why a proof failed. The output parameter
 %   counterexample contains an x such that f(x) falls outside of [y0, y1].
-%   
+   
 % Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
 % of the MIT license. See the LICENSE file for details.
 
