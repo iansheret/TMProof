@@ -36,9 +36,10 @@ classdef Queue < handle
                     'Queue:pop_empty_queue', ...
                     'Attempt to remove an item from an empty queue'); 
             end
+            
             head_idx = q.tail - q.count;
-            item = q.buffer(head_idx);
-            q.count = q.count - 1;
+            item     = q.buffer(head_idx);
+            q.count  = q.count - 1;
             
             if q.shrink_required
                 q.shrink_storage;
