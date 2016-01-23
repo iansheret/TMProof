@@ -4,6 +4,12 @@ function Y = bound_polynomial(p, X)
 % Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
 % of the MIT license. See the LICENSE file for details.
 
+% Check for non-finite inputs
+if any(~isfinite(p))
+    Y = Interval(-Inf, Inf);
+    return
+end
+
 % Get roots of the derivitive
 d = polyder(p);
 r = roots(d);

@@ -15,6 +15,12 @@ verifyEqual(testCase, I.lower, -1);
 verifyEqual(testCase, I.upper, 3);
 end
 
+function TestBoundPolynomialHandlesNonfiniteCoeffs(testCase)
+I = bound_polynomial([1,-2,Inf], Interval(0, 3));
+verifyEqual(testCase, I.lower, -Inf);
+verifyEqual(testCase, I.upper, Inf);
+end
+
 % Polynomial splitting
 function TestSplitPolynomialGiveCorrectAnswer(testCase)
 [high,low] = split_polynomial(1:10, 3);
