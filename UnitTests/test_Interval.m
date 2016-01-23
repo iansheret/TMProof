@@ -113,3 +113,7 @@ for i=1:size(table,1)
 end
 end
 
+function TestMedianGivesCorrectAnswer(testCase)
+x = Interval(1,2);
+verifyEqual(testCase, median(x), 1.5);
+end

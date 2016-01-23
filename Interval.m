@@ -120,6 +120,11 @@ classdef Interval
             c = sin(a + pi/2);
         end
         
+        % Median
+        function m = median(a)
+            m = 0.5*(a.lower + a.upper); 
+        end
+        
     end
     
 end
