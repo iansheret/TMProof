@@ -24,9 +24,7 @@ f = @(x) x.*(6.6 - 2.9.*x);
 x_min = 0;
 x_max = 1;
 toll  = 1e-4;
-tic
 g = invert_function(f, x_min, x_max, toll);
-toc
 num_test_points = 1e3;
 x_true = linspace(x_min, x_max, num_test_points);
 y = f(x_true);
