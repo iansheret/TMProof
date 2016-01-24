@@ -28,6 +28,8 @@ if ~is_monotonic
     error('invert_function:input_not_monotonic','Input is not monotonic.');
 end
 
+% Search for an inversion strategy which can be proved to meet the accuracy
+% requirement
 for n=1:max_order
     g = @(y) invert_with_fixed_iter(f, y, x_min, x_max, n);
     residual = @(x) x - g(f(x));
