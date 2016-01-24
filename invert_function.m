@@ -10,6 +10,9 @@ function g = invert_function(f, x_min, x_max, toll)
 %
 %   The worst-case accuracy of G is specified by the parameter TOLL.
 
+% Copyright (c) 2016 Ian Sheret. This project is licensed under the terms
+% of the MIT license. See the LICENSE file for details.
+
 % Define search parameters
 order = 10;
 max_order = 5;
