@@ -1,10 +1,8 @@
 # AutoProof
 
-Simple proofs on MATLAB functions, using interval arithmetic and Taylor models.
-
 ### What is it?
 
-Autoproof is a simple tool for getting guaranteed performance from numerics code. You can use it to:
+Autoproof is a simple tool for getting guaranteed performance from MATLAB numerics code. You can use it to:
 
 * Get accuracy and time bounds on code which uses unsafe algorithms like Newton-Raphson.
 
