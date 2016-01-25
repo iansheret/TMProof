@@ -20,6 +20,7 @@ end
 Plot this so we get an idea what it looks like:
 ```matlab
 x = linspace(0, 5, 100);
->> plot(x, f(x))
+plot(x, f(x))
 ```
 
+![example_function](Images/example_function.png)
