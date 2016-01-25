@@ -15,7 +15,7 @@ function g = invert_function(f, x_min, x_max, toll)
 
 % Define search parameters
 order = 10;
-max_order = 5;
+max_newton_order = 5;
 
 % Check that the function is monotonic
 df_dx = @(x) get_gradient(f, x);
@@ -30,7 +30,7 @@ end
 
 % Search for an inversion strategy which can be proved to meet the accuracy
 % requirement
-for n=1:max_order
+for n=1:max_newton_order
     g = @(y) invert_with_fixed_iter(f, y, x_min, x_max, n);
     residual = @(x) x - g(f(x));
     is_ok = prove_in_band(residual, x_min, x_max, -toll, toll, order);
