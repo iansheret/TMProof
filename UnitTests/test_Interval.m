@@ -117,3 +117,25 @@ function TestMedianGivesCorrectAnswer(testCase)
 x = Interval(1,2);
 verifyEqual(testCase, median(x), 1.5);
 end
+
+function TestWidthGivesCorrectAnswer(testCase)
+x = Interval(13,17);
+verifyEqual(testCase, width(x), 4);
+end
+
+function TestBisectGivesCorrectAnswer(testCase)
+[a,b] = Interval(13,17).bisect;
+verifyEqual(testCase, a.lower, 13);
+verifyEqual(testCase, a.upper, 15);
+verifyEqual(testCase, b.lower, 15);
+verifyEqual(testCase, b.upper, 17);
+end
+
+function TestIncludesGivesCorrectAnswer(testCase)
+a = Interval(pi,5);
+verifyEqual(testCase, a.includes(3), false);
+verifyEqual(testCase, a.includes(pi), true);
+verifyEqual(testCase, a.includes(4), true);
+verifyEqual(testCase, a.includes(5), true);
+verifyEqual(testCase, a.includes(5.5), false);
+end

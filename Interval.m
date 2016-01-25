@@ -122,7 +122,24 @@ classdef Interval
         
         % Median
         function m = median(a)
-            m = 0.5*(a.lower + a.upper); 
+            m = 0.5*(a.lower + a.upper);
+        end
+        
+         % Width
+        function m = width(a)
+            m = a.upper - a.lower; 
+        end
+        
+        % Bisect
+        function [a,b] = bisect(x)
+            m = median(x);
+            a = Interval(x.lower, m);
+            b = Interval(m, x.upper);
+        end
+        
+        % Includes
+        function result = includes(a, x)
+            result = (a.lower<=x) && x<=a.upper;
         end
         
     end
