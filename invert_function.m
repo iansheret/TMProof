@@ -20,9 +20,9 @@ max_newton_order = 5;
 % Check that the function is monotonic
 df_dx = @(x) get_gradient(f, x);
 if f(x_max) > f(x_min)
-    is_monotonic = prove_in_band(df_dx, x_min, x_max, 0, Inf, order);
+    is_monotonic = prove_bounds(df_dx, [x_min, x_max], [0, Inf], order);
 else
-    is_monotonic = prove_in_band(df_dx, x_min, x_max, -Inf, 0, order);
+    is_monotonic = prove_bounds(df_dx, [x_min, x_max], [-Inf, 0], order);
 end
 if ~is_monotonic
     error('invert_function:input_not_monotonic','Input is not monotonic.');
@@ -33,7 +33,7 @@ end
 for n=1:max_newton_order
     g = @(y) invert_with_fixed_iter(f, y, x_min, x_max, n);
     residual = @(x) x - g(f(x));
-    is_ok = prove_in_band(residual, x_min, x_max, -toll, toll, order);
+    is_ok = prove_bounds(residual, [x_min, x_max], [-toll, toll], order);
     if is_ok
         break
     end
