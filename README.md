@@ -10,7 +10,7 @@ TMProof is a simple tool for getting guaranteed performance from MATLAB numerics
 
 * Automate code generation, with a guarantee that the output meets accuracy and execution speed requirements.
 
-Under the hood, TMProof uses Taylor Models to guarantee rigorous proofs.
+Under the hood, TMProof uses [Taylor Models](http://magix.lix.polytechnique.fr/magix/magixalix/slides/magix_berz_makino.pdf) to guarantee rigorous proofs.
 
 ### Quick tour
 Lets warm up by proving something obvious. Start by defining a simple function:
