@@ -1,14 +1,16 @@
-# AutoProof
+# TMProof
 
 ### What is it?
 
-Autoproof is a simple tool for getting guaranteed performance from MATLAB numerics code. You can use it to:
+TMProof is a simple tool for getting guaranteed performance from MATLAB numerics code. You can use it to:
 
 * Prove that code can never return Inf or NaN, or more generally can never return values outside specified bounds.
 
 * Get accuracy and time bounds on code which uses unsafe algorithms like Newton-Raphson.
 
 * Automate code generation, with a guarantee that the output meets accuracy and execution speed requirements.
+
+Under the hood, TMProof uses Taylor Models to guarantee rigorous proofs.
 
 ### Quick tour
 Lets warm up by proving something obvious. Start by defining a simple function:
