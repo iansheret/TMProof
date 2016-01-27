@@ -119,15 +119,16 @@ function test_times_tm_tm_with_truncation(test_case)
 %
 % h = 15(x-x0)^2
 %
-% and its bounds in the range (x-x0) = [-0.5,0.5] are
+% and its bounds in the range (x-x0) = [-0.5,0.5] using bound_polynomial
+% are:
 %
-% B(h) = [0, 3.75];
+% B(h) = [-7.5, 7.5];
 %
 % The interval is then
 %
-% I = [0, 3.75] + [7,10]*[-1,3] + [11,16]*[-2,1] + [-2,1]*[-1,3]
-%   = [0, 3.75] + [-10,30]      + [-32,16]       + [-6,3]
-%   = [-48,52.75]
+% I = [-7.5, 7.5] + [7,10]*[-1,3] + [11,16]*[-2,1] + [-2,1]*[-1,3]
+%   = [-7.5, 7.5] + [-10,30]      + [-32,16]       + [-6,3]
+%   = [-55.5,56.5]
 
 a = TaylorModel(1, 2, [3,8.5], Interval(-2, 1));
 b = TaylorModel(1, 2, [5,13.5], Interval(-1, 3));
@@ -135,8 +136,8 @@ t = times_tm_tm(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [83,114.75]);
-verifyEqual(test_case, t.I.lower, -48);
-verifyEqual(test_case, t.I.upper, 52.75);
+verifyEqual(test_case, t.I.lower, -55.5);
+verifyEqual(test_case, t.I.upper, 56.5);
 end
 
 function test_times_tm_numeric(test_case)

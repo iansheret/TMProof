@@ -10,9 +10,9 @@ end
 
 % Polynomial bounding
 function TestBoundPolynomialGiveCorrectAnswer(testCase)
-I = bound_polynomial([1,-2,0], Interval(0, 3));
-verifyEqual(testCase, I.lower, -1);
-verifyEqual(testCase, I.upper, 3);
+I = bound_polynomial([1,-2], Interval(0, 3));
+verifyEqual(testCase, I.lower, -2);
+verifyEqual(testCase, I.upper, 1);
 end
 
 function TestBoundPolynomialHandlesNonfiniteCoeffs(testCase)
@@ -26,4 +26,11 @@ function TestSplitPolynomialGiveCorrectAnswer(testCase)
 [high,low] = split_polynomial(1:10, 3);
 verifyEqual(testCase, low, 7:10);
 verifyEqual(testCase, high, [1:6, 0, 0, 0, 0]);
+end
+
+% Polynomial evaluation
+function TestEvalPolynomialWithDoubles(testCase)
+p =[13, -7, 3];
+x = 5;
+verifyEqual(testCase, eval_polynomial(p, x), polyval(p, x));
 end
