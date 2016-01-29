@@ -14,8 +14,8 @@ t = TaylorModel(1, 2, [3,4,5], Interval(6, 7));
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [3,4,5]);
-verifyEqual(test_case, t.I.lower, 6);
-verifyEqual(test_case, t.I.upper, 7);
+verifyEqual(test_case, lower(t.I), 6);
+verifyEqual(test_case, upper(t.I), 7);
 end
 
 % Named constructor for the identity function
@@ -24,8 +24,8 @@ t = TaylorModel.identity(1, 2, 5);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [0, 0, 0, 0, 1, 1.5]);
-verifyEqual(test_case, t.I.lower, 0);
-verifyEqual(test_case, t.I.upper, 0);
+verifyEqual(test_case, lower(t.I), 0);
+verifyEqual(test_case, upper(t.I), 0);
 end
 
 % Fundamental opperators
@@ -37,8 +37,8 @@ t = plus_tm_tm(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [11,13,15]);
-verifyEqual(test_case, t.I.lower, 17);
-verifyEqual(test_case, t.I.upper, 19);
+verifyEqual(test_case, lower(t.I), 17);
+verifyEqual(test_case, upper(t.I), 19);
 end
 
 function test_plus_tm_numeric_gives_correct_answer(test_case)
@@ -48,8 +48,8 @@ t = plus_tm_numeric(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [3,4,13]);
-verifyEqual(test_case, t.I.lower, 6);
-verifyEqual(test_case, t.I.upper, 7);
+verifyEqual(test_case, lower(t.I), 6);
+verifyEqual(test_case, upper(t.I), 7);
 end
 
 function test_plus_gives_correct_answer(test_case)
@@ -69,8 +69,8 @@ t = times_tm_tm(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [3,4,5]);
-verifyEqual(test_case, t.I.lower, 6);
-verifyEqual(test_case, t.I.upper, 7);
+verifyEqual(test_case, lower(t.I), 6);
+verifyEqual(test_case, upper(t.I), 7);
 end
 
 function test_times_tm_tm_without_truncation(test_case)
@@ -105,8 +105,8 @@ t = times_tm_tm(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [15,83,114.75]);
-verifyEqual(test_case, t.I.lower, -48);
-verifyEqual(test_case, t.I.upper, 49);
+verifyEqual(test_case, lower(t.I), -48);
+verifyEqual(test_case, upper(t.I), 49);
 end
 
 function test_times_tm_tm_with_truncation(test_case)
@@ -136,8 +136,8 @@ t = times_tm_tm(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [83,114.75]);
-verifyEqual(test_case, t.I.lower, -55.5);
-verifyEqual(test_case, t.I.upper, 56.5);
+verifyEqual(test_case, lower(t.I), -55.5);
+verifyEqual(test_case, upper(t.I), 56.5);
 end
 
 function test_times_tm_numeric(test_case)
@@ -147,8 +147,8 @@ t = times_tm_numeric(a,b);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [21,59.5]);
-verifyEqual(test_case, t.I.lower, -14);
-verifyEqual(test_case, t.I.upper, 7);
+verifyEqual(test_case, lower(t.I), -14);
+verifyEqual(test_case, upper(t.I), 7);
 end
 
 function test_times_gives_correct_answer(test_case)
@@ -167,8 +167,8 @@ t = -a;
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [-3,-4,-5]);
-verifyEqual(test_case, t.I.lower, -7);
-verifyEqual(test_case, t.I.upper, -6);
+verifyEqual(test_case, lower(t.I), -7);
+verifyEqual(test_case, upper(t.I), -6);
 end
 
 % Minus
@@ -179,8 +179,8 @@ t = a-b;
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [-5,-5,-5]);
-verifyEqual(test_case, t.I.lower, -6);
-verifyEqual(test_case, t.I.upper, -4);
+verifyEqual(test_case, lower(t.I), -6);
+verifyEqual(test_case, upper(t.I), -4);
 end
 
 % Includes zero
@@ -204,8 +204,8 @@ t = reciprocal(a);
 verifyEqual(test_case, t.a, 1);
 verifyEqual(test_case, t.b, 2);
 verifyEqual(test_case, t.P, [0,0]);
-verifyEqual(test_case, t.I.lower, -Inf);
-verifyEqual(test_case, t.I.upper, Inf);
+verifyEqual(test_case, lower(t.I), -Inf);
+verifyEqual(test_case, upper(t.I), Inf);
 end
 
 function test_reciprocal_when_input_excludes_zero(test_case)
@@ -251,8 +251,8 @@ t = reciprocal(a);
 verifyEqual(test_case, t.a, 0.5);
 verifyEqual(test_case, t.b, 1.5);
 verifyEqual(test_case, t.P, [-0.08,0.2], 'AbsTol', 5*eps);
-verifyEqual(test_case, t.I.lower, -0.08, 'AbsTol', 5*eps);
-verifyEqual(test_case, t.I.upper, 28/75, 'AbsTol', 5*eps);
+verifyEqual(test_case, lower(t.I), -0.08, 'AbsTol', 5*eps);
+verifyEqual(test_case, upper(t.I), 28/75, 'AbsTol', 5*eps);
 end
 
 % Division operator

@@ -104,7 +104,7 @@ classdef TaylorModel
             x0 = a.x0;
             ab = Interval(a.a - x0, a.b - x0);
             B = bound_polynomial(a.P, ab) + a.I;
-            result =  (B.lower <= 0) && ( 0 <= B.upper);
+            result =  (lower(B) <= 0) && ( 0 <= upper(B));
         end
           
         % Reciprocal

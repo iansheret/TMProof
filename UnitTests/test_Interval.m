@@ -11,21 +11,21 @@ end
 % Constructor
 function TestConstructorGeneratesValidObject(testCase)
 in = Interval(3, 7);
-verifyEqual(testCase, in.lower, 3);
-verifyEqual(testCase, in.upper, 7);
+verifyEqual(testCase, lower(in), 3);
+verifyEqual(testCase, upper(in), 7);
 end
 
 % Arithmetic opperators
 function TestPlusGivesCorrectAnswer(testCase)
 in = Interval(2,5) + Interval(3,7);
-verifyEqual(testCase, in.lower, 5);
-verifyEqual(testCase, in.upper, 12);
+verifyEqual(testCase, lower(in), 5);
+verifyEqual(testCase, upper(in), 12);
 end
 
 function TestMinusGivesCorrectAnswer(testCase)
 in = Interval(2,5) - Interval(3,7);
-verifyEqual(testCase, in.lower,-5);
-verifyEqual(testCase, in.upper, 2);
+verifyEqual(testCase, lower(in),-5);
+verifyEqual(testCase, upper(in), 2);
 end
 
 function TestTimesGivesCorrectAnswer(testCase)
@@ -37,8 +37,8 @@ for i=1:size(table,1)
     a = Interval(table(i,1), table(i,2));
     b = Interval(table(i,3), table(i,4));
     in = a .* b;
-    verifyEqual(testCase, in.lower, table(i,5));
-    verifyEqual(testCase, in.upper, table(i,6));
+    verifyEqual(testCase, lower(in), table(i,5));
+    verifyEqual(testCase, upper(in), table(i,6));
 end
 end
 
@@ -51,8 +51,8 @@ for i=1:size(table,1)
     a = Interval(table(i,1), table(i,2));
     b = Interval(table(i,3), table(i,4));
     in = a ./ b;
-    verifyEqual(testCase, in.lower, table(i,5));
-    verifyEqual(testCase, in.upper, table(i,6));
+    verifyEqual(testCase, lower(in), table(i,5));
+    verifyEqual(testCase, upper(in), table(i,6));
 end
 end
 
@@ -61,8 +61,8 @@ a = Interval(-3, 4);
 b = Interval(-2, 5);
 in = a ./ b;
 import matlab.unittest.constraints.HasNaN;
-verifyThat(testCase, in.upper, HasNaN);
-verifyThat(testCase, in.lower, HasNaN);
+verifyThat(testCase, upper(in), HasNaN);
+verifyThat(testCase, lower(in), HasNaN);
 end
 
 function TestPowerGivesCorrectAnswer(testCase)
@@ -76,8 +76,8 @@ for i=1:size(table,1)
     a = Interval(table(i,1), table(i,2));
     b = table(i,3);
     in = a .^ b;
-    verifyEqual(testCase, in.lower, table(i,4));
-    verifyEqual(testCase, in.upper, table(i,5));
+    verifyEqual(testCase, lower(in), table(i,4));
+    verifyEqual(testCase, upper(in), table(i,5));
 end
 end
 
@@ -92,8 +92,8 @@ table = [...
 for i=1:size(table,1)
     a = Interval(table(i,1), table(i,2));
     in = sin(a);
-    verifyEqual(testCase, in.lower, table(i,3));
-    verifyEqual(testCase, in.upper, table(i,4));
+    verifyEqual(testCase, lower(in), table(i,3));
+    verifyEqual(testCase, upper(in), table(i,4));
 end
 end
 
@@ -108,8 +108,8 @@ table = [...
 for i=1:size(table,1)
     a = Interval(table(i,1), table(i,2));
     in = cos(a);
-    verifyEqual(testCase, in.lower, table(i,3));
-    verifyEqual(testCase, in.upper, table(i,4));
+    verifyEqual(testCase, lower(in), table(i,3));
+    verifyEqual(testCase, upper(in), table(i,4));
 end
 end
 
@@ -124,18 +124,18 @@ verifyEqual(testCase, width(x), 4);
 end
 
 function TestBisectGivesCorrectAnswer(testCase)
-[a,b] = Interval(13,17).bisect;
-verifyEqual(testCase, a.lower, 13);
-verifyEqual(testCase, a.upper, 15);
-verifyEqual(testCase, b.lower, 15);
-verifyEqual(testCase, b.upper, 17);
+[a,b] = bisect(Interval(13,17));
+verifyEqual(testCase, lower(a), 13);
+verifyEqual(testCase, upper(a), 15);
+verifyEqual(testCase, lower(b), 15);
+verifyEqual(testCase, upper(b), 17);
 end
 
 function TestIncludesGivesCorrectAnswer(testCase)
 a = Interval(pi,5);
-verifyEqual(testCase, a.includes(3), false);
-verifyEqual(testCase, a.includes(pi), true);
-verifyEqual(testCase, a.includes(4), true);
-verifyEqual(testCase, a.includes(5), true);
-verifyEqual(testCase, a.includes(5.5), false);
+verifyEqual(testCase, includes(a,3), false);
+verifyEqual(testCase, includes(a,pi), true);
+verifyEqual(testCase, includes(a,4), true);
+verifyEqual(testCase, includes(a,5), true);
+verifyEqual(testCase, includes(a,5.5), false);
 end

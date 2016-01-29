@@ -11,7 +11,7 @@ if any(~isfinite(p))
 end
     
 % Bound using the mean value theorm
-x0 = 0.5*(x.lower + x.upper);
+x0 = 0.5*(lower(x) + upper(x));
 d = polyder(p);
 y = eval_polynomial(p,x0) + eval_polynomial(d,x).*(x - x0);
 

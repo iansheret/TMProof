@@ -46,7 +46,7 @@ x1 = x_range(2);
 y0 = y_bounds(1);
 y1 = y_bounds(2);
 band = Interval(y0, y1);
-x = look_for_failure_in_range(@(x) band.includes(f(x)), x0, x1);
+x = look_for_failure_in_range(@(x) includes(band, f(x)), x0, x1);
 if ~isempty(x)
     result = false;
     counterexample = x;
@@ -66,7 +66,7 @@ while head > 0
     y    = bound_function(f, x, order);
     
     % Check if the test has outright failed
-    if (y.upper < y0) || (y.lower > y1)
+    if (upper(y) < y0) || (lower(y) > y1)
         result         = false;
         counterexample = median(x);
         emit_message_if_needed(counterexample, f(counterexample), verbose);
@@ -75,7 +75,7 @@ while head > 0
     
     % If this iterval has passed, we can move onto the next item without
     % taking any further action
-    if (y0 <= y.lower && y.upper <= y1)
+    if (y0 <= lower(y) && upper(y) <= y1)
         continue
     end
     
@@ -87,7 +87,7 @@ while head > 0
     % otherwise return the failing interval.
     if too_small_to_bisect
         result = false;
-        c = look_for_failure_nearby(@(p) band.includes(f(p)), x.lower);
+        c = look_for_failure_nearby(@(p) includes(band, f(p)), lower(x));
         if ~isempty(c)
             counterexample = c;
         else

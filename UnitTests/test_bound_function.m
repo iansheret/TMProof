@@ -11,13 +11,13 @@ end
 function test_bound_function_gives_correct_answer(test_case)
 f = @(x) (x + 3).*(x + 5).*(x + 7) + 1.5;
 y = bound_function(f, Interval(0, 3), 3);
-verifyEqual(test_case, y.lower, f(0));
-verifyEqual(test_case, y.upper, f(3));
+verifyEqual(test_case, lower(y), f(0));
+verifyEqual(test_case, upper(y), f(3));
 end
 
 function test_bound_function_converts_NaNs_to_Infs(test_case)
 f = @(x) x.*0./0;
 y = bound_function(f, Interval(0, 3), 3);
-verifyEqual(test_case, y.lower, -Inf);
-verifyEqual(test_case, y.upper, Inf);
+verifyEqual(test_case, lower(y), -Inf);
+verifyEqual(test_case, upper(y), Inf);
 end

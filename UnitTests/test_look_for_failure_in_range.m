@@ -10,7 +10,7 @@ end
 function test_passes_when_input_true(test_case)
 f = @(x) 1 - x;
 y = Interval(0, 1);
-g = @(x) y.includes(f(x));
+g = @(x) includes(y, f(x));
 x_min = 0;
 x_max = 1;
 x = look_for_failure_in_range(g, x_min, x_max);
@@ -20,7 +20,7 @@ end
 function test_passes_when_input_false(test_case)
 f = @(x) 1 - 2.*x;
 y = Interval(0, 1);
-g = @(x) y.includes(f(x));
+g = @(x) includes(y, f(x));
 x_min = 0;
 x_max = 1;
 x = look_for_failure_in_range(g, x_min, x_max);

@@ -11,14 +11,14 @@ end
 % Polynomial bounding
 function TestBoundPolynomialGiveCorrectAnswer(testCase)
 I = bound_polynomial([1,-2], Interval(0, 3));
-verifyEqual(testCase, I.lower, -2);
-verifyEqual(testCase, I.upper, 1);
+verifyEqual(testCase, lower(I), -2);
+verifyEqual(testCase, upper(I), 1);
 end
 
 function TestBoundPolynomialHandlesNonfiniteCoeffs(testCase)
 I = bound_polynomial([1,-2,Inf], Interval(0, 3));
-verifyEqual(testCase, I.lower, -Inf);
-verifyEqual(testCase, I.upper, Inf);
+verifyEqual(testCase, lower(I), -Inf);
+verifyEqual(testCase, upper(I), Inf);
 end
 
 % Polynomial splitting

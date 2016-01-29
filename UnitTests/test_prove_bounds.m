@@ -51,5 +51,5 @@ x = [1, 5];
 y = [-10,0];
 [result,counterexample] = prove_bounds(f, x, y);
 verifyEqual(test_case, result, false);
-verifyTrue(test_case, counterexample.includes(pi));
+verifyTrue(test_case, includes(counterexample, pi));
 end
