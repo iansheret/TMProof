@@ -32,12 +32,12 @@ classdef Interval
         % Arithmetic opperators
         function c = plus(a, b)
             [a, b] = promoteIfNumeric(a, b);
-            c = Interval(a.lower + b.lower, a.upper + b.upper);
+            c = boost_interval.plus(a, b);
         end
         
         function c = minus(a, b)
             [a, b] = promoteIfNumeric(a, b);
-            c = Interval(a.lower - b.upper, a.upper - b.lower);
+            c = boost_interval.minus(a, b);
         end
         
         function c = uminus(a)
@@ -46,26 +46,12 @@ classdef Interval
         
         function c = times(a, b)
             [a, b] = promoteIfNumeric(a, b);
-            v = [...
-                a.lower.*b.lower, a.lower.*b.upper,...
-                a.upper.*b.lower, a.upper.*b.upper];
-            c = Interval(min(v), max(v));   
+            c = boost_interval.times(a, b);   
         end
         
         function c = rdivide(a, b)
             [a, b] = promoteIfNumeric(a, b);
-            if includesZero(a) && includesZero(b)
-                c = Interval(NaN, NaN); 
-            elseif sign(b.lower)==-1 && sign(b.upper)~=-1
-                c = Interval(-Inf, Inf);    
-            else
-                v = [...
-                    a.lower/b.lower,...
-                    a.lower/b.upper,...
-                    a.upper/b.lower,...
-                    a.upper/b.upper];
-                c = Interval(min(v), max(v)); 
-            end
+            c = boost_interval.rdivide(a, b);
         end
         
         function c = power(a,b)
