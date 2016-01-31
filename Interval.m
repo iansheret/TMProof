@@ -32,12 +32,13 @@ classdef Interval
         % Arithmetic opperators
         function c = plus(a, b)
             [a, b] = promoteIfNumeric(a, b);
-            c = Interval(a.lower + b.lower, a.upper + b.upper);
+            system_dependent('setround', -Inf);
+            c = Interval(a.lower + b.lower, -(-a.upper - b.upper));
+            system_dependent('setround', 0.5);
         end
         
         function c = minus(a, b)
-            [a, b] = promoteIfNumeric(a, b);
-            c = Interval(a.lower - b.upper, a.upper - b.lower);
+            c = a + (-b);
         end
         
         function c = uminus(a)
@@ -46,9 +47,13 @@ classdef Interval
         
         function c = times(a, b)
             [a, b] = promoteIfNumeric(a, b);
+            system_dependent('setround', -Inf);
             v = [...
                 a.lower.*b.lower, a.lower.*b.upper,...
-                a.upper.*b.lower, a.upper.*b.upper];
+                a.upper.*b.lower, a.upper.*b.upper,...
+                -((-a.lower).*b.lower), -((-a.lower).*b.upper),...
+                -((-a.upper).*b.lower), -((-a.upper).*b.upper)];
+            system_dependent('setround', 0.5);
             c = Interval(min(v), max(v));   
         end
         
@@ -59,11 +64,17 @@ classdef Interval
             elseif sign(b.lower)==-1 && sign(b.upper)~=-1
                 c = Interval(-Inf, Inf);    
             else
+                system_dependent('setround', -Inf);
                 v = [...
                     a.lower/b.lower,...
                     a.lower/b.upper,...
                     a.upper/b.lower,...
-                    a.upper/b.upper];
+                    a.upper/b.upper,...
+                    -((-a.lower)/b.lower),...
+                    -((-a.lower)/b.upper),...
+                    -((-a.upper)/b.lower),...
+                    -((-a.upper)/b.upper)];
+                system_dependent('setround', 0.5);
                 c = Interval(min(v), max(v)); 
             end
         end
