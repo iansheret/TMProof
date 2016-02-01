@@ -79,20 +79,52 @@ classdef Interval
             end
         end
         
+        function c = power_inf(a, b)
+            c = Interval(a,a);
+            for i=1:b-1
+                c = c.*a;
+            end
+            c = c.lower;
+        end
+        
+        function c = power_sup(a, b)
+            c = Interval(a,a);
+            for i=1:b-1
+                c = c.*a;
+            end
+            c = c.upper;
+        end
+        
         function c = power(a,b)
             assert(isnumeric(b));
-            if a.lower < 0
-                assert(mod(b,1)==0);
-            end
+            assert(mod(b,1)==0);
+            assert(b>=0);
+            
+            % Handle trivial cases
             if b==0
                 c = Interval(1,1);
-            elseif ((mod(b, 2)==1) || (a.lower>=0))
-                c = Interval(a.lower^b, a.upper^b);
-            elseif (a.upper >=0)
-                c = Interval(0, max([a.lower^b, a.upper^b]));
-            else
-                c = Interval(a.upper.^b,a.lower^b);
+                return
             end
+            if b==1
+                c = a;
+                return;
+            end
+            
+            % For even powers of an interval that includes zero, transform
+            % into an equivlent monotonic form
+            b_is_even = mod(b,2)==0;
+            if (b_is_even && a.includes(0))
+                a = Interval(0, max(-a.lower, a.upper));
+            end
+            
+            % Get the bounds
+            l = Interval(a.lower, a.lower);
+            u = Interval(a.upper, a.upper);
+            for i=2:b
+                l = l.*a.lower;
+                u = u.*a.upper;
+            end
+            c = Interval(l.lower, u.upper);
         end
         
         % Inclusion of zero, needed for the division opperator.
