@@ -124,7 +124,7 @@ classdef Interval
                 l = l.*a.lower;
                 u = u.*a.upper;
             end
-            c = Interval(l.lower, u.upper);
+            c = Interval(min(l.lower,u.lower), max(l.upper,u.upper));
         end
         
         % Inclusion of zero, needed for the division opperator.
