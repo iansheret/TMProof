@@ -67,7 +67,6 @@ a = 1 + 2^-26;
 b = 1 + 2^-27;
 p = 1 + 2^-26 + 2^-27;
 q = 1 + 2^-26 + 2^-27 + eps;
-
 table = [...
      2,5,    3, 7,    6,35;... % No rounding
     -2,5,    3, 7,  -14,35;... % No rounding
@@ -80,14 +79,10 @@ function TestDivideGivesCorrectAnswerForNonNaNCases(testCase)
 table = [...
      2,5,    3, 7,    2/7,5/3;...
      2,5,    0, 7,    2/7,Inf;...
-     2,5,   -3, 0,   -Inf,Inf];
-for i=1:size(table,1)
-    a = Interval(table(i,1), table(i,2));
-    b = Interval(table(i,3), table(i,4));
-    in = a ./ b;
-    verifyEqual(testCase, in.lower, table(i,5));
-    verifyEqual(testCase, in.upper, table(i,6));
-end
+     2,5,   -3, 0,   -Inf,Inf;...
+     2,2,    7, 7,    2/7,2/7 + eps(2/7);...
+     5,5,    3, 3,    5/3-eps(5/3),5/3];
+VerifyTruthTable(table, @rdivide, testCase);
 end
 
 function TestDivideGivesCorrectAnswerWhenNaN(testCase)
