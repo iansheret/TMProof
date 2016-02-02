@@ -140,27 +140,61 @@ classdef Interval
         
         % Sine
         function c = sin(a)
-            v = [a.lower, a.upper];
-            y = sin(v);
             
-            n = floor((a.lower - pi/2)/(2*pi));
-            m = floor((a.upper - pi/2)/(2*pi));
-            if n~=m
-                y = [y, 1];
+            % Get the quadrant numbers of the bounds
+            pi_2 = Interval(pi/2, pi/2 + eps(pi/2));
+            p = a.lower ./ pi_2;
+            q = a.upper ./ pi_2;
+            m = floor(p.lower);
+            n = floor(q.upper);
+            
+            % Form candidate vector
+            p = i_sin(a.lower);
+            q = i_sin(a.upper);
+            v = [p.lower, p.upper, q.lower, q.upper];
+            
+            % Check if maxima and minima occur in the range, and add +/-1
+            % to the list if needed
+            has_maxima = floor((m-1)/4)~=floor((n-1)/4);
+            has_minima = floor((m+1)/4)~=floor((n+1)/4);
+            if has_maxima
+                v = [v, 1];
             end
-
-            n = floor((a.lower - 3*pi/2)/(2*pi));
-            m = floor((a.upper - 3*pi/2)/(2*pi));
-            if n~=m
-                y = [y, -1];
+            if has_minima
+                v = [v, -1];
             end
-
-            c = Interval(min(y), max(y));
+            
+            % Get result
+            c = Interval(min(v), max(v));
         end
         
         % Cosine
         function c = cos(a)
-            c = sin(a + pi/2);
+            % Get the quadrant numbers of the bounds
+            pi_2 = Interval(pi/2, pi/2 + eps(pi/2));
+            p = a.lower ./ pi_2;
+            q = a.upper ./ pi_2;
+            m = floor(p.lower);
+            n = floor(q.upper);
+            
+            % Form candidate vector
+            p = i_cos(a.lower);
+            q = i_cos(a.upper);
+            v = [p.lower, p.upper, q.lower, q.upper];
+            
+            % Check if maxima and minima occur in the range, and add +/-1
+            % to the list if needed
+            has_maxima = floor(m/4)~=floor(n/4);
+            has_minima = floor((m+2)/4)~=floor((n+2)/4);
+            if has_maxima
+                v = [v, 1];
+            end
+            if has_minima
+                v = [v, -1];
+            end
+            
+            % Get result
+            c = Interval(min(v), max(v));
         end
         
         % Median
@@ -187,4 +221,48 @@ classdef Interval
         
     end
     
+end
+
+function y = i_sin(x)
+if x==0
+    y = Interval(0,0);
+else
+    a = sin(x);
+    l = max(prior(a), -1);
+    u = min(next(a), 1);
+    y = Interval(l, u);
+end
+end
+
+function y = i_cos(x)
+if x==0
+    y = Interval(1,1);
+else
+    a = cos(x);
+    l = max(prior(a), -1);
+    u = min(next(a), 1);
+    y = Interval(l, u);
+end
+end
+
+function b = next(a)
+if a<0
+    b = -prior(-a);
+else
+    b = a + eps(a);
+end
+end
+
+function b = prior(a)
+if a<0
+    b = a - eps(-a);
+else
+    p = a - eps(a);
+    q = p + eps(p);
+    if q==a
+        b = p;
+    else
+        b = q;
+    end
+end
 end
