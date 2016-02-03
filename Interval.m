@@ -32,9 +32,9 @@ classdef Interval
         % Arithmetic opperators
         function c = plus(a, b)
             [a, b] = promoteIfNumeric(a, b);
+            cleanup = onCleanup(@() system_dependent('setround', 0.5));
             system_dependent('setround', -Inf);
             c = Interval(a.lower + b.lower, -(-a.upper - b.upper));
-            system_dependent('setround', 0.5);
         end
         
         function c = minus(a, b)
@@ -47,6 +47,7 @@ classdef Interval
         
         function c = times(a, b)
             [a, b] = promoteIfNumeric(a, b);
+            cleanup = onCleanup(@() system_dependent('setround', 0.5));
             system_dependent('setround', -Inf);
             v = [...
                 a.lower.*b.lower, a.lower.*b.upper,...
@@ -64,6 +65,7 @@ classdef Interval
             elseif sign(b.lower)==-1 && sign(b.upper)~=-1
                 c = Interval(-Inf, Inf);    
             else
+                cleanup = onCleanup(@() system_dependent('setround', 0.5));
                 system_dependent('setround', -Inf);
                 v = [...
                     a.lower/b.lower,...
